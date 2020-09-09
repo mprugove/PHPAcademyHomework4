@@ -182,7 +182,8 @@ inner join book_type bt on b.type = bt.id;
 
 select b.book_name, b.book_edition from books b
 left join book_type bt on b.type = bt.id
-group by book_edition;
+group by book_edition
+HAVING sum(book_edition);
 
 select l.loan_date, UPPER(b.book_name) from loan l
 left join books b on l.book = b.id where loan_date > date('2020/08/09');
@@ -202,9 +203,10 @@ delete from loan where user = 1;
 delete from loan where user = 2;
 delete from loan where book = 'Murder on the Orient Express';
 delete from books where book_name = 'The House of God';
-delete from loan where user = 2;
+delete from loan where user = 5;
 
 # Update
+update user
 update user set adress = 'Random adress' where id = 2;
 update books set type = 2 where book_name = 'The Silmarillion';
 update books set type = 9 where book_name = 'The Death of Ayrton Senna';
