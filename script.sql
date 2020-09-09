@@ -187,7 +187,7 @@ group by book_edition desc;
 select l.loan_date, UPPER(b.book_name) from loan l
                                                 left join books b on l.book = b.id where loan_date > date('2020/08/09');
 
-select avg(loan_date) from loan;
+select date(avg(loan_date)) from loan;
 select round(avg(book_edition)) from books;
 
 select b.book_name from books b order by LENGTH(b.book_name) asc;
@@ -216,5 +216,3 @@ update books set type = 9 where book_name = 'The Death of Ayrton Senna';
 update books set type = 13 where book_name  = 'Annabel Lee';
 update books set type = 13 where book_name  =  'The Raven';
 update books set type = 15 where book_name = 'The Happy Prince and Other Stories';
-
-
