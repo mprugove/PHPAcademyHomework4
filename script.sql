@@ -1,42 +1,42 @@
-#drop database library;
+drop database library;
 # Database create/use
 create database library character set utf8mb4 COLLATE utf8mb4_unicode_ci;
 use library;
 
 # Creates
 create table author (
-id int not null auto_increment primary key,
-author_name varchar(255)
+                        id int not null auto_increment primary key,
+                        author_name varchar(255)
 );
 
 create table book_type (
-id int not null auto_increment primary key,
-type varchar(255)
+                           id int not null auto_increment primary key,
+                           type varchar(255)
 );
 
 create table books (
-id int not null auto_increment primary key,
-book_name varchar(255),
-book_edition int(25),
-author int,
-type int,
-foreign key (author) references author(id),
-foreign key (type) references book_type(id)
+                       id int not null auto_increment primary key,
+                       book_name varchar(255),
+                       book_edition int(25),
+                       author int,
+                       type int,
+                       foreign key (author) references author(id),
+                       foreign key (type) references book_type(id)
 );
 create table user (
-id tinyint not null auto_increment primary key,
-first_name varchar(255),
-last_name varchar(255),
-adress varchar(255),
-joined_at timestamp
+                      id tinyint not null auto_increment primary key,
+                      first_name varchar(255),
+                      last_name varchar(255),
+                      adress varchar(255),
+                      joined_at timestamp
 );
 
 create table loan (
-loan_date timestamp,
-user tinyint,
-book int,
-foreign key (user) references user(id),
-foreign key (book) references books(id)
+                      loan_date timestamp,
+                      user tinyint,
+                      book int,
+                      foreign key (user) references user(id),
+                      foreign key (book) references books(id)
 );
 
 # Inserts
@@ -170,29 +170,31 @@ insert into loan (loan_date, user, book) values
 select * from loan;
 
 # Select
-select CONCAT(u.first_name, ' ', u.last_name), b.book_name, bt.type, l.loan_date from loan l
-inner join books b on l.book = b.id
-inner join book_type bt on b.type = bt.id
-inner join user u on l.user = u.id
+select CONCAT(u.first_name, ' ', u.last_name), u.adress, b.book_name, bt.type, l.loan_date from loan l
+                                                                                                    inner join books b on l.book = b.id
+                                                                                                    inner join book_type bt on b.type = bt.id
+                                                                                                    inner join user u on l.user = u.id
 ORDER BY loan_date asc;
 
 select DISTINCT a.author_name, b.book_name, bt.type from books b
-inner join author a on b.author = a.id
-inner join book_type bt on b.type = bt.id;
+                                                             inner join author a on b.author = a.id
+                                                             inner join book_type bt on b.type = bt.id;
 
 select b.book_name, b.book_edition from books b
-left join book_type bt on b.type = bt.id
-group by book_edition
-HAVING sum(book_edition);
+                                            left join book_type bt on b.type = bt.id
+group by book_edition desc;
 
 select l.loan_date, UPPER(b.book_name) from loan l
-left join books b on l.book = b.id where loan_date > date('2020/08/09');
+                                                left join books b on l.book = b.id where loan_date > date('2020/08/09');
+
+select avg(loan_date) from loan;
+select round(avg(book_edition)) from books;
 
 select b.book_name from books b order by LENGTH(b.book_name) asc;
 
 select DISTINCT CONCAT(b.book_name, ' by ',  a.author_name) from books b
-inner join book_type bt on b.type = bt.id
-inner join author a on b.author = a.id;
+                                                                     inner join book_type bt on b.type = bt.id
+                                                                     inner join author a on b.author = a.id;
 
 select count(*) from books;
 select count(*) from book_type;
@@ -202,11 +204,12 @@ select count(*) from author;
 delete from loan where user = 1;
 delete from loan where user = 2;
 delete from loan where book = 'Murder on the Orient Express';
+delete from loan where book = 'The Grand Design';
 delete from books where book_name = 'The House of God';
 delete from loan where user = 5;
 
 # Update
-update user
+
 update user set adress = 'Random adress' where id = 2;
 update books set type = 2 where book_name = 'The Silmarillion';
 update books set type = 9 where book_name = 'The Death of Ayrton Senna';
