@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Sep 10, 2020 at 07:15 AM
+-- Generation Time: Sep 10, 2020 at 07:28 AM
 -- Server version: 10.1.46-MariaDB-1~bionic
 -- PHP Version: 7.4.8
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `library`
 --
+CREATE DATABASE IF NOT EXISTS `library` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `library`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `author`
 --
 
+DROP TABLE IF EXISTS `author`;
 CREATE TABLE `author` (
   `id` int(11) NOT NULL,
   `author_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -65,6 +68,7 @@ INSERT INTO `author` (`id`, `author_name`) VALUES
 -- Table structure for table `books`
 --
 
+DROP TABLE IF EXISTS `books`;
 CREATE TABLE `books` (
   `id` int(11) NOT NULL,
   `book_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -134,6 +138,7 @@ INSERT INTO `books` (`id`, `book_name`, `book_edition`, `author`, `type`) VALUES
 -- Table structure for table `book_type`
 --
 
+DROP TABLE IF EXISTS `book_type`;
 CREATE TABLE `book_type` (
   `id` int(11) NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -166,6 +171,7 @@ INSERT INTO `book_type` (`id`, `type`) VALUES
 -- Table structure for table `loan`
 --
 
+DROP TABLE IF EXISTS `loan`;
 CREATE TABLE `loan` (
   `loan_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user` tinyint(4) DEFAULT NULL,
@@ -194,6 +200,7 @@ INSERT INTO `loan` (`loan_date`, `user`, `book`) VALUES
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` tinyint(4) NOT NULL,
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
